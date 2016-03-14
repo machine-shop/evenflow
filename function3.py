@@ -21,7 +21,7 @@ def removePeriodicMean(signalMat, period, sliderWidth, NoDataCode):
         if avg[i,j] == NoDataCode or signalMat[i,j] == NoDataCode:
             anomalyMat[i,j] = NoDataCode
         else:
-            anomalyMat[i,j] = signalMat[i,j]
+            anomalyMat[i,j] = signalMat[i,j] - avg[i,j]
 
     return anomalyMat
 
