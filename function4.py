@@ -9,12 +9,11 @@ def getSkipMean(vector, NoDataCode):
     sum = 0
     nVals = 0
     for i in range(N):
-        if vector(i) != NoDataCode:
-            sum+=vector(i)
+        if vector[i] != NoDataCode:
+            sum+=vector[i]
             nVals += 1
     if nVals > 0:
         avg = sum/nVals
     else:
         avg = NoDataCode
-
     return avg
