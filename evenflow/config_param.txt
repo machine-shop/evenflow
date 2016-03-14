@@ -1,0 +1,14 @@
+-9999		%NoDataCode
+100		%nTests;100=default
+1.66		%oneTailZ;1.66=100;1.68=50;1.71=25
+11		%nBins
+0		%trimTheData;0=no;1=yes
+0		%transformation;0=none;1=anomaly
+0		%anomalyMovingAveragePeriodNumber
+0		%anomalyPeriodInData
+1		%workspaceOutput
+0		%textOutput;broken
+0		%mfileOutput;broken
+0		%debug;0=off;1=on;
+1		%parallelWorkers;1=default
+1		%binType;0=local;1=global
