@@ -8,7 +8,7 @@ def removePeriodicMean(signalMat, period, sliderWidth, NoDataCode):
     :param NoDatCode: data value to be ignored
     :return: matrix of values that accounts for periodic averages
     """
-    nData, nSignals = np.shape(signalMat)
+    nData, nSignals = np.shape(signalMat)   
     newLength = nData - period * (sliderWidth - 1)
     anomalyMat = np.nan * np.zeros(shape = (newLength, nSignals))
     avg = np.nan * np.zeros(shape=(nData, nSignals))
