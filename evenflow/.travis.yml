@@ -1,0 +1,13 @@
+language: python
+python:
+    - "3.4"
+addon:
+    apt:
+        packages:
+            - flake8
+            - coveralls
+            - nose
+            - python3-numpy
+            - python3-matplotlib
+script:
+    - nosetests
