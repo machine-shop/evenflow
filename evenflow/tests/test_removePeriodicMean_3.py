@@ -10,7 +10,7 @@ def test_basicfunctionality():
     b = np.zeros(shape=(3, 4))
     b[0, 0] = 1
     b[1, 2] = 1
-    assert rpm.removeperiodicmean(b, 0, 1, -999).all() == b.all()
+    assert rpm.removeperiodicmean(b, 1, 1, -999).all() == a.all()
 
 
 def test_2():
