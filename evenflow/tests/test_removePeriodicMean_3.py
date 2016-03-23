@@ -13,17 +13,10 @@ def test_basicfunctionality():
     assert rpm.removeperiodicmean(b, 1, 1, -999).all() == a.all()
 
 
-def test_2():
-    return 0
+def test_allones():
+    a = np.zeros(shape=(50,50))
+    a[a==0] = 1
+    b = np.zeros(shape=(50,50))
+    assert rpm.removeperiodicmean(a,1, 1, 0).all() == b.all()
 
 
-def test_3():
-    return 0
-
-
-def test_4():
-    return 0
-
-
-def test_5():
-    return 0
