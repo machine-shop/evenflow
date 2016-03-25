@@ -5,19 +5,20 @@ def DoProduction(T):
     nVars, PPP, nTaus = np.shape(T)
 
     #Creates two 2D arrays filled with 0s.
-    Tplus = np.zeros(nVars, nTaus)
-    Tminus = np.zeros(nVars, nTaus)
+    Tplus = np.zeros((nVars, nTaus))
+    Tminus = np.zeros((nVars, nTaus))
 
     #Creates one 3D array filled with NaN.
-    TnetBinary = np.empty(nVars, nVars, nTaus).fill(np.NAN)
+    TnetBinary = np.empty((nVars, nVars, nTaus))
+    TnetBinary.fill(np.NAN)
 
     #Creates one 3D array filled with 1s.
-    nanFlag = np.ones(nVars, nVars, nTaus)
+    nanFlag = np.ones((nVars, nVars, nTaus))
 
     #Calculation
-    for i in nVars:
-        for j in nVars:
-            for t in nTaus:
+    for i in range(nVars):
+        for j in range(nVars):
+            for t in range(nTaus):
                 if T[i, j, t] != np.NAN:
                     Tplus[i,t] = Tplus[i,t] + T[i,j,t]
                     Tminus[j,t] = Tminus[j,t] + T[i,j,t]
