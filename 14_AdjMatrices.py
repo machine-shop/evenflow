@@ -81,6 +81,8 @@ def AdjMatrices(T, SigThereshT,TvsIzero):
                                 helper2(sX, sY, lag)
                                 TvsIzerocharLagMaxPeak[sX, sY] = TvsIzero[sX, sY, lag]
 
+    return (Abinary, Awtd, AwtdCut, charLagFirstPeak, TcharLagFirstPeak, charLagMaxPeak, TcharLagMaxPeak, TvsIzerocharLagMaxPeak, nSigLags, FirstSigLag, LastSigLag)
+
 
 def helper1(sX, sY, lag):
     Abinary[sX,sY,lag] = 1
