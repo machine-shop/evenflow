@@ -8,31 +8,33 @@ def classifysignal(samplemat, binedges, nbinmat, nodatacode):
     :param nbinmat: a column vector where every entry
     is the number of bins used for this sample
     :param nodatacode: indicates no data value at this position
-    :return:
+    :return: matrix of classified data, and the number of assigned entries.
     """
-    # TODO: vectorize, write tests.
+    """
+    notes explaining the implementation:
+     1) nbinmat in the original matlab is a column vector with every entry the same. So instead of
+     looping through I just assigned the entire classifiedmat to the value of the first entry.
+
+     2) maintained the initial triple loop, no neat way to vectorize.
+
+    """
+
+    # TODO: write tests.
+
+    # asserts that the arguments are of the right dimensions.
+    assert samplemat.shape[1] == nbinmat.shape[0]
+    assert np.amax(nbinmat) == binedges.shape[1]
     ndata, nsignals = np.shape(samplemat)
-    classifiedmat = np.zeros(shape=(ndata, nsignals))
     ncounts = 0
-    """
-    add in a bunch of assert statements to ensure that the dimensions
-    of the matrices passed in all line up.
-    """
-    # assert
-    # assert
-    # assert
-    # assert
+    classifiedmat = np.zeros(shape=(ndata, nsignals))
+    classifiedmat.fill(nbinmat[0])
+    classifiedmat[samplemat == nodatacode] = nodatacode
     for i in range(ndata):
         for j in range(nsignals):
-            classifiedmat[i,j] = nbinmat[j]
             for e in range(nbinmat[j]):
-                if samplemat[i,j] == nodatacode:
-                    classifiedmat[i,j] == nodatacode
-                    break
-                elif samplemat[i,j] <= binedges[j, e]:
-                    classifiedmat[i,j] = e
+                if samplemat[i, j] <= binedges[j, e]:
+                    classifiedmat[i, j] = e
                     ncounts += 1
                     break
     ncounts = float(ncounts/nsignals)
     return classifiedmat, ncounts
-
