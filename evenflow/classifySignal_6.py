@@ -17,29 +17,31 @@ def classifysignal(samplemat, binedges, nbinmat, nodatacode):
 
      2) maintained the initial triple loop, no neat way to vectorize.
 
+     3) IMPORTANT: classifiedmat features e+1 instead of e as entries so as to
+     line up with matlab implementation. MIGHT WANNA CHANGE THIS, but code functionality
+     is intact regardless.
+
     """
-
-    # TODO: write tests.
-
     # asserts that the arguments are of the right dimensions.
     assert samplemat.shape[1] == nbinmat.shape[0]
     assert np.amax(nbinmat) == binedges.shape[1]
+
+
     ndata, nsignals = np.shape(samplemat)
+    print("Ndata: " + str(ndata))
+    print("NSignals: " + str(nsignals))
     ncounts = 0
     classifiedmat = np.zeros(shape=(ndata, nsignals))
-    #classifiedmat.fill(nbinmat[0][0])
-
     for i in range(ndata):
         for j in range(nsignals):
             classifiedmat[i, j] = nbinmat[j]
             for e in range(nbinmat[j]):
                 if samplemat[i, j] == nodatacode:
                     classifiedmat[i, j] = nodatacode
+                    break
                 elif samplemat[i, j] <= binedges[j, e]:
-                    classifiedmat[i, j] = e
+                    classifiedmat[i, j] = e + 1
                     ncounts += 1
                     break
-
     ncounts = float(ncounts/nsignals)
-
     return classifiedmat, ncounts
