@@ -27,14 +27,19 @@ def classifysignal(samplemat, binedges, nbinmat, nodatacode):
     ndata, nsignals = np.shape(samplemat)
     ncounts = 0
     classifiedmat = np.zeros(shape=(ndata, nsignals))
-    classifiedmat.fill(nbinmat[0])
-    classifiedmat[samplemat == nodatacode] = nodatacode
+    #classifiedmat.fill(nbinmat[0][0])
+
     for i in range(ndata):
         for j in range(nsignals):
+            classifiedmat[i, j] = nbinmat[j]
             for e in range(nbinmat[j]):
-                if samplemat[i, j] <= binedges[j, e]:
+                if samplemat[i, j] == nodatacode:
+                    classifiedmat[i, j] = nodatacode
+                elif samplemat[i, j] <= binedges[j, e]:
                     classifiedmat[i, j] = e
                     ncounts += 1
                     break
+
     ncounts = float(ncounts/nsignals)
+
     return classifiedmat, ncounts

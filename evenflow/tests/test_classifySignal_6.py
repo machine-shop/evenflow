@@ -1,7 +1,8 @@
 import numpy as np
+import os
 from evenflow import classifySignal_6 as csig
 
-
+path = os.path.dirname(os.path.realpath(__file__))
 def test_basicfunctionality():
     binedges = np.array([-15.188183272727272,-11.711953545454545,-8.2357238181818158,
                       -4.7594940909090884,-1.2832643636363628,2.1929653636363682,
@@ -15,12 +16,18 @@ def test_basicfunctionality():
                       30.819065887272725,35.084315415454547,39.349564943636359,
                       43.614814471818178,47.880064]).reshape(3,11)
 
-    samplemat = np.genfromtxt('classifySignalTestFile.txt', delimiter=",")
-    nodatacode = -9999
-    nbinmat = np.array([11,11,11]).reshape(3,1)
-    ans = np.genfromtxt('classifySignalTestFile2.txt', delimiter=",")
+    samplemat = np.genfromtxt(path + '\classifySignalTestFile.txt', delimiter=",")
 
-    assert csig.classifySignal(samplemat, binedges, nbinmat, nodatacode).all() == ans.all()
+    nodatacode = -9999
+
+    nbinmat = np.array([11,11,11]).reshape(3,1)
+
+    ans = np.genfromtxt(path + '\classifySignalTestFile2.txt', delimiter=",")
+
+    result = csig.classifysignal(samplemat, binedges, nbinmat, nodatacode)
+
+    assert result[0].all() == ans.all()
+
 
 
 
