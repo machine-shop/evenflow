@@ -18,4 +18,4 @@ def test_3():
 
 
 def test_4():
-    return 0:
+    return 0
