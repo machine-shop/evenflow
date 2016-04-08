@@ -17,10 +17,13 @@ def test_basic():
                       18.023317302727271,22.288566830909087,26.553816359090906,
                       30.819065887272725,35.084315415454547,39.349564943636359,
                       43.614814471818178,47.880064]).reshape(3,11)
+
     samplemat = np.genfromtxt(path + '/classifySignalTestFile.txt', delimiter=",")
+
     nodatacode = -9999
     nbinmat = np.array([11,11,11]).reshape(3,1)
     ans = np.genfromtxt(path + '/classifySignalTestFile2.txt', delimiter=",")
+
     result, count = csig.classifysignal(samplemat, binedges, nbinmat, nodatacode)
     assert np.allclose(result, ans)
 
