@@ -11,17 +11,32 @@ def getcountmat(tuplemat, nbinmat, sX, sY, nodatacode):
     :return: number of valid entries (ncount) and matrix with 1s where there
     are valid entries, and 0 elsewhere.
     """
+    """
+    Notes on implementation:
+    1) values of dimXt, dimYw and dimYf are hard-coded and reduced by 1
+    to solve indexing issues. Matlab indexes from 1, python indexes from 0.
+    2) likewise is done when assigning dimXt, dimYw, dimYf to tuplemat[i,j].
+    """
+    #Todo: vectorize as much as possible.
+
+    # catching faulty parameters.
+    assert sX >= 1
+    assert sY >= 1
+    assert np.size(tuplemat) > 0
+    assert np.size(nbinmat) > 0
+
+
     ndata, _ = np.shape(tuplemat)
     binmatarr = np.asarray(nbinmat)
-    C = np.zeros(shape=(binmatarr[sX-1],binmatarr[sY-1], binmatarr[sY-1]))
+    c = np.zeros(shape=(binmatarr[sX-1], binmatarr[sY-1], binmatarr[sY-1]))
     ncounts = 0
     for i in range(ndata):
-        dimXt = tuplemat[i, 1]
-        dimYw = tuplemat[i, 2]
-        dimYf = tuplemat[i, 3]
+        dimXt = tuplemat[i, 0]
+        dimYw = tuplemat[i, 1]
+        dimYf = tuplemat[i, 2]
         if dimXt != nodatacode and dimYw != nodatacode and dimYf != nodatacode:
-            C[dimXt, dimYw, dimYf]+= 1
+            c[dimXt-1, dimYw-1, dimYf-1] += 1
             ncounts += 1
-    return C, ncounts
+    return c, ncounts
 
 
