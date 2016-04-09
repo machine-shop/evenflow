@@ -34,6 +34,4 @@ def test_all():
 #check to see if only valid inputs are processed. insert random inputs
 # to check if everything is being caught.
 def test_random_inputs():
-    a = np.random(shape=(1,5))
-
-
+    return 0

@@ -22,10 +22,11 @@ def getcountmat(tuplemat, nbinmat, sX, sY, nodatacode):
     """
     #Todo: vectorize as much as possible.
     #Todo: generalize to arbitrary sized tuplemat/return matrix.
-
     # catching faulty parameters.
     assert sX >= 1
     assert sY >= 1
+    assert sX-1 < len(nbinmat)
+    assert sY-1 < len(nbinmat)
     assert np.size(tuplemat) > 0
     assert np.size(nbinmat) > 0
     tupshape = np.shape(tuplemat)
@@ -35,9 +36,6 @@ def getcountmat(tuplemat, nbinmat, sX, sY, nodatacode):
     binmatarr = np.asarray(nbinmat)
     c = np.zeros(shape=(binmatarr[sX-1], binmatarr[sY-1], binmatarr[sY-1]))
     ncounts = 0
-
-    # to be changed: store the entries in an array, and use these to assign indices.
-    # allows for more general interpretation/output.
     for i in range(ndata):
         dimXt = tuplemat[i, 0]
         dimYw = tuplemat[i, 1]
