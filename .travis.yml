@@ -11,3 +11,4 @@ addon:
             - python3-matplotlib
 script:
     - nosetests
+sudo: false
