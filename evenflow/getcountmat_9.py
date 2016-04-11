@@ -16,9 +16,7 @@ def getcountmat(tuplemat, nbinmat, sX, sY, nodatacode):
     1) values of dimXt, dimYw and dimYf are hard-coded and reduced by 1
     to solve indexing issues. Matlab indexes from 1, python indexes from 0.
     2) likewise is done when assigning dimXt, dimYw, dimYf to tuplemat[i,j].
-    3) Currently, tuplemat is assumed to be an n x 3 matrix. Might wanna change this
-    to be more general, but this would require working much of the code that depends
-    on this.
+    3) Generalized to an n x n matrix. Might cause compatibility issues
     """
     #Todo: vectorize as much as possible.
     #Todo: generalize to arbitrary sized tuplemat/return matrix.
