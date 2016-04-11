@@ -7,10 +7,10 @@ path = os.path.dirname(os.path.realpath(__file__))
 
 def test_basic():
     nbinmat = np.array([11, 11, 11]).reshape(3, 1)
-    tuplemat = np.genfromtxt(path + '\mat.txt', delimiter=',')
+    tuplemat = np.genfromtxt(path + '/mat.txt', delimiter=',')
     nodatacode = -9999
     sx, sy = 3, 3
-    result = np.genfromtxt(path + '\getcountresult.txt', delimiter=',')
+    result = np.genfromtxt(path + '/getcountresult.txt', delimiter=',')
     result.reshape((11, 11, 11))
     for matrix in result:
         matrix = np.transpose(matrix)
