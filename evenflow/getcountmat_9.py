@@ -14,8 +14,7 @@ def getcountmat(tuplemat, nbinmat, sx, sy, nodatacode):
     """
     """
     Notes on implementation:
-    1) values of dimXt, dimYw and dimYf are hard-coded and reduced by 1
-    to solve indexing issues. Matlab indexes from 1, python indexes from 0.
+    1) indices are all reduced by 1 to solve indexing issues. Matlab indexes from 1, python indexes from 0.
     2) likewise is done when assigning dimXt, dimYw, dimYf to tuplemat[i,j].
     3) Generalized to an n x n matrix. Might cause compatibility issues with
     getShannonBits.

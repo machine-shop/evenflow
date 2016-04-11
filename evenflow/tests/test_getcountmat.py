@@ -21,7 +21,7 @@ def test_basic():
 def test_shape():
     nbinmat = np.array([3, 3, 3, 3]).reshape(4, 1)
     tuplemat = np.zeros(shape=(4, 4))
-    nodatacode = -9999
+    nodatacode = - 9999
     sx, sy = 3, 3
     result, counts = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
     assert np.shape(result) == (3, 3, 3, 3)
@@ -34,8 +34,8 @@ def test_indices():
     sx, sy = 3, 3
     result, count = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
     assert count == 4
-    assert result[0,0,0,0] == 4
-    result[0,0,0,0] = np.nan
+    assert result[0, 0, 0, 0] == 4
+    result[0, 0, 0, 0] = np.nan
     assert np.nanmean(result) == 0
 
 
@@ -55,15 +55,15 @@ def test_varied_bins():
     sx, sy = 3, 3
     result, count = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
     assert np.shape(result) == (4, 4, 4, 4)
-    assert result[0,0,0,0] == count
+    assert result[0, 0, 0, 0] == count
     assert count == 4
     dx, dy = 4, 4
     result2, count2 = gcm.getcountmat(tuplemat, nbinmat, dx, dy, nodatacode)
     assert np.shape(result2) == (5, 5, 5, 5)
-    assert result2[0,0,0,0] == count2
+    assert result2[0, 0, 0, 0] == count2
     assert count2 == 4
     fx, fy = 2, 4
     result3, count3 = gcm.getcountmat(tuplemat, nbinmat, fx, fy, nodatacode)
     assert np.shape(result3) == (3, 5, 5, 5)
-    assert result3[0,0,0,0] == count3
+    assert result3[0, 0, 0, 0] == count3
     assert count3 == 4
