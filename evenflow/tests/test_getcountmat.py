@@ -18,25 +18,52 @@ def test_basic():
     assert final.all() == result.all()
 
 
-def test_assignment():
-    nbinmat = np.array([3, 3, 3]).reshape(3, 1)
+def test_shape():
+    nbinmat = np.array([3, 3, 3, 3]).reshape(4, 1)
     tuplemat = np.zeros(shape=(4, 4))
-
-    return 0
+    nodatacode = -9999
+    sx, sy = 3, 3
+    result, counts = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
+    assert np.shape(result) == (3, 3, 3, 3)
 
 
 def test_indices():
-    return 0
+    nbinmat = np.array([3, 3, 3, 3]).reshape(4, 1)
+    tuplemat = np.ones(shape=(4, 4))
+    nodatacode = -9999
+    sx, sy = 3, 3
+    result, count = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
+    assert count == 4
+    assert result[0,0,0,0] == 4
+    result[0,0,0,0] = np.nan
+    assert np.nanmean(result) == 0
 
 
 def test_ncounts():
-    return 0
+    nbinmat = np.array([3, 3, 3, 3, 3]).reshape(5, 1)
+    tuplemat = np.ones(shape=(5, 5))
+    nodatacode = -9999
+    sx, sy = 3, 3
+    result, count = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
+    assert count == 5
 
 
-def test_all():
-    return 0
-
-#check to see if only valid inputs are processed. insert random inputs
-# to check if everything is being caught.
-def test_random_inputs():
-    return 0
+def test_varied_bins():
+    nbinmat = np.array([2, 3, 4, 5]).reshape(4, 1)
+    tuplemat = np.ones(shape=(4, 4))
+    nodatacode = -9999
+    sx, sy = 3, 3
+    result, count = gcm.getcountmat(tuplemat, nbinmat, sx, sy, nodatacode)
+    assert np.shape(result) == (4, 4, 4, 4)
+    assert result[0,0,0,0] == count
+    assert count == 4
+    dx, dy = 4, 4
+    result2, count2 = gcm.getcountmat(tuplemat, nbinmat, dx, dy, nodatacode)
+    assert np.shape(result2) == (5, 5, 5, 5)
+    assert result2[0,0,0,0] == count2
+    assert count2 == 4
+    fx, fy = 2, 4
+    result3, count3 = gcm.getcountmat(tuplemat, nbinmat, fx, fy, nodatacode)
+    assert np.shape(result3) == (3, 5, 5, 5)
+    assert result3[0,0,0,0] == count3
+    assert count3 == 4
