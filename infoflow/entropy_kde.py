@@ -19,25 +19,32 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     l, k = 1, 1
 
     sourcearr = source.flatten()
+    #print ("source array = " + str(sourcearr))
     targetarr = target.flatten()
 
     # go through the timeseries source and target, and populate source_pat, target_pat and target_t
+    # ERROR FREE
     source_pat = []
     target_pat = []
     target_t = []
-    for i in range(max(l+timelagx, k+timelagy), min(len(source), len(target)), 1):
-       # print(sourcearr[i - l - timelagx:i - timelagx + 1])
-        source_pat.append(sourcearr[i - l - timelagx:i - timelagx ][0])
-        target_pat.append(targetarr[i - k - timelagy:i - timelagy ][0])
+
+    #todo: fix length discrepancy. matlab len = 200, pythonlen = 199. FUCK
+    for i in range(max(l+timelagx, k+timelagy), min(len(source), len(target))):
+        source_pat.append(sourcearr[i - l - timelagx :i - timelagx][0])
+        target_pat.append(targetarr[i - k - timelagy :i - timelagy][0])
         target_t.append(targetarr[i])
 
-    # reassigning to numpy arrays
+    print (source_pat)
+    print (len(target_pat))
+    print (len(target_t))
+
+    # reassigning to numpy arrays [ERROR FREE]
     source_pat = np.array(source_pat).reshape(len(source_pat), 1)
     target_pat = np.array(target_pat).reshape(len(target_pat), 1)
     target_t = np.array(target_t).reshape(len(target_t), 1)
 
-    # computing transfer entropy
-    #print(source_pat)
+    # computing transfer entropy [ERROR FREE}
+    #TODO fix computation errors
     source_pat_i = np.linspace(np.amin(source_pat) - 0.1*(np.amax(source_pat) - np.amin(source_pat)),
                                np.amax(source_pat)+ 0.1*(np.amax(source_pat) - np.amin(source_pat)), n)
 
@@ -51,15 +58,29 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     source_pat_i = np.array(source_pat_i).reshape(len(source_pat_i),1)
     target_pat_i = np.array(target_pat_i).reshape(len(target_pat_i),1)
     target_t_i = np.array(target_t_i).reshape(len(target_t_i),1)
+
+
     #initializing the probability density function matrix
     pdf = np.zeros(shape=(len(target_t_i), len(source_pat_i), len(target_pat_i)))
+    # print(len(source_pat_i))
+    # print(len(target_pat_i))
+    # print(len(target_t_i))
 
+    #bookkeeping
+    source_pat = source_pat.transpose()
+    target_pat = target_pat.transpose()
+    target_t = target_t.transpose()
 
+    x = np.vstack((source_pat, target_pat, target_t))
+    print (np.shape(source_pat))
+    print (np.shape(target_pat))
+    print (np.shape(target_t))
     for i in range(len(source_pat_i)):
         for j in range(len(target_pat_i)):
             for k in range(len(target_t_i)):
-                x = np.hstack((source_pat, target_pat, target_t))
+                #print(np.shape(x))
                 xi = np.hstack((source_pat_i[i], target_pat_i[j], target_t_i[k]))
+                #print(xi)
                 ans = mdkde.multidimensionalkde(x, xi, bw_coeff)
                 pdf[i, j, k]=ans[0]
 
