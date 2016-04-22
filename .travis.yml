@@ -12,3 +12,5 @@ addon:
 script:
     - nosetests
 sudo: false
+virtualenv:
+    system_site_packages: true
