@@ -19,32 +19,32 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     l, k = 1, 1
 
     sourcearr = source.flatten()
-    #print ("source array = " + str(sourcearr))
     targetarr = target.flatten()
 
     # go through the timeseries source and target, and populate source_pat, target_pat and target_t
-    # ERROR FREE
     source_pat = []
     target_pat = []
     target_t = []
 
-    #todo: fix length discrepancy. matlab len = 200, pythonlen = 199. FUCK
-    for i in range(max(l+timelagx, k+timelagy), min(len(source), len(target))):
-        source_pat.append(sourcearr[i - l - timelagx :i - timelagx][0])
-        target_pat.append(targetarr[i - k - timelagy :i - timelagy][0])
+    #print (max(l+timelagx, k+timelagy))
+    #print (min(len(sourcearr[0]), len(targetarr[0])))
+    #print (list((range(max(l+timelagx, k+timelagy), min(len(source) , len(target))+1))))
+
+    for i in range(max(l+timelagx, k+timelagy)-1, min(len(sourcearr) , len(targetarr))):
+        source_pat.append(sourcearr[i - l - timelagx+1 :i - timelagx+1][0])
+        target_pat.append(targetarr[i - k - timelagy+1 :i - timelagy+1][0])
         target_t.append(targetarr[i])
 
-    print (source_pat)
-    print (len(target_pat))
-    print (len(target_t))
+    #print (source_pat)
+    #print (target_pat)
+    #print (len(target_t))
 
-    # reassigning to numpy arrays [ERROR FREE]
+    # reassigning to numpy arrays
     source_pat = np.array(source_pat).reshape(len(source_pat), 1)
     target_pat = np.array(target_pat).reshape(len(target_pat), 1)
     target_t = np.array(target_t).reshape(len(target_t), 1)
 
-    # computing transfer entropy [ERROR FREE}
-    #TODO fix computation errors
+    # computing transfer entropy
     source_pat_i = np.linspace(np.amin(source_pat) - 0.1*(np.amax(source_pat) - np.amin(source_pat)),
                                np.amax(source_pat)+ 0.1*(np.amax(source_pat) - np.amin(source_pat)), n)
 
@@ -55,9 +55,12 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
                 np.amax(target_t)+0.1*(np.amax(target_t)-np.amin(target_t)), n)
 
     # reshaping the resultant arrays
-    source_pat_i = np.array(source_pat_i).reshape(len(source_pat_i),1)
-    target_pat_i = np.array(target_pat_i).reshape(len(target_pat_i),1)
-    target_t_i = np.array(target_t_i).reshape(len(target_t_i),1)
+    source_pat_i = np.array(source_pat_i)#.reshape(len(source_pat_i),1)
+    target_pat_i = np.array(target_pat_i)#.reshape(len(target_pat_i),1)
+    target_t_i = np.array(target_t_i)#.reshape(len(target_t_i),1)
+    #print (source_pat_i)
+    #print (target_pat_i)
+    #print (target_t_i)
 
 
     #initializing the probability density function matrix
@@ -71,21 +74,23 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     target_pat = target_pat.transpose()
     target_t = target_t.transpose()
 
-    x = np.vstack((source_pat, target_pat, target_t))
-    print (np.shape(source_pat))
-    print (np.shape(target_pat))
-    print (np.shape(target_t))
+    #todo fix errors
+    x = np.vstack((source_pat, target_pat, target_t)).transpose()
+    #print (np.shape(source_pat))
+    #print (np.shape(target_pat))
+    #print (np.shape(target_t))
+    #print(np.shape(x))
     for i in range(len(source_pat_i)):
         for j in range(len(target_pat_i)):
             for k in range(len(target_t_i)):
-                #print(np.shape(x))
                 xi = np.hstack((source_pat_i[i], target_pat_i[j], target_t_i[k]))
-                #print(xi)
                 ans = mdkde.multidimensionalkde(x, xi, bw_coeff)
-                pdf[i, j, k]=ans[0]
+                pdf[k, i, j]=ans[0]
+
 
     # normalizing
     pdf = pdf/np.sum(pdf)
+    print(pdf)
     transferentropy = 0
     for i in range(len(source_pat_i)):
         for j in range(len(target_pat_i)):
