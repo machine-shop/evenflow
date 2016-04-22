@@ -7,17 +7,15 @@ path = os.path.dirname(os.path.realpath(__file__))
 
 def test_basic():
     x = np.genfromtxt(path + '\entropykdeinputx.txt', delimiter="\t")
-    #print(np.shape(x))
     y = np.genfromtxt(path + '\entropykdeinputy.txt', delimiter='\t')
-    #print(np.shape(y))
     n = 10
     timelagx = 2
     timelagy = 2
     bw_coeff = 1
     ans = kde.kerneldensityestimation(x,y,timelagx,timelagy,n,bw_coeff)
     result = 0.798553577280728
-    #print(ans)
-    assert ans == result
+    print(ans)
+    assert np.isclose(ans, result,rtol=10e-20,atol=10e-15)
 
 
 
