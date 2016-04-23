@@ -11,3 +11,6 @@ addon:
             - python3-matplotlib
 script:
     - nosetests
+sudo: false
+virtualenv:
+	system_site_packages: true
