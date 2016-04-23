@@ -5,13 +5,13 @@ from math import log
 
 def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     """
-    :param source: source time series, 1-D vector
-    :param target: target time series, 1-D vector
-    :param timelagx: time lag in x from present
-    :param timelagy: time lag in y from present
-    :param n: number of equally spaced points along each dimension where probabilities are to be estimated
-    :param bw_coeff: multiplier that adjusts Gaussian bandwidth
-    :return: transfer entropy in bits.
+    :param source: source time series, 1-D np.ndarray
+    :param target: target time series, 1-D np.ndarray
+    :param timelagx: time lag in x from present. Integer.
+    :param timelagy: time lag in y from present. Integer.
+    :param n: number of equally spaced points along each dimension where probabilities are to be estimated. Integer.
+    :param bw_coeff: multiplier that adjusts Gaussian bandwidth. Integer.
+    :return: transfer entropy in bits. float.
     """
 
     """ All code written here is based on the transfer entropy
@@ -23,7 +23,7 @@ def kerneldensityestimation(source, target, timelagx, timelagy, n, bw_coeff):
     sourcearr = source.flatten()
     targetarr = target.flatten()
 
-    # go through source and target timeseries, and populate source_pat, target_pat and target_t
+    # populating source_pat, target_pat and target_t
     source_pat = []
     target_pat = []
     target_t = []

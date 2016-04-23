@@ -6,7 +6,7 @@ def multidimensionalkde(x, xi, bw_coeff):
     """
     :param x: np.ndarray, rows are observations and columns are dimensions.
     :param xi: np.ndarray, coordinates at which joint probabilities are to be estimated.
-    :param bw_coeff: scalar multiplier that adjusts the rule of thumb bandwidth
+    :param bw_coeff: multiplier that adjusts the rule of thumb bandwidth. Integer.
     :return: joint probability at xi
     """
 
